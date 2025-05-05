@@ -12,124 +12,98 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import mapData from '@/components/u-charts/map.json';
-
+import { chinaGeo } from '@/components/u-charts/map-china';
+import QiunDataCharts from '@/components/qiun-data-charts/qiun-data-charts.vue';
 const provinces = [
-  '北京',
-  '天津',
-  '河北',
-  '山西',
-  '内蒙古',
-  '辽宁',
-  '吉林',
-  '黑龙江',
-  '上海',
-  '江苏',
-  '浙江',
-  '安徽',
-  '福建',
-  '江西',
-  '山东',
-  '河南',
-  '湖北',
-  '湖南',
-  '广东',
-  '广西',
-  '海南',
-  '重庆',
-  '四川',
-  '贵州',
-  '云南',
-  '西藏',
-  '陕西',
-  '甘肃',
-  '青海',
-  '宁夏',
-  '新疆',
-  '台湾',
-  '香港',
-  '澳门'
+  '北京市',
+  '天津市',
+  '河北省',
+  '山西省',
+  '内蒙古自治区',
+  '辽宁省',
+  '吉林省',
+  '黑龙江省',
+  '上海市',
+  '江苏省',
+  '浙江省',
+  '安徽省',
+  '福建省',
+  '江西省',
+  '山东省',
+  '河南省',
+  '湖北省',
+  '湖南省',
+  '广东省',
+  '广西壮族自治区',
+  '海南省',
+  '重庆市',
+  '四川省',
+  '贵州省',
+  '云南省',
+  '西藏自治区',
+  '陕西省',
+  '甘肃省',
+  '青海省',
+  '宁夏回族自治区',
+  '新疆维吾尔自治区',
+  '台湾省',
+  '香港特别行政区',
+  '澳门特别行政区'
 ];
 
 // 生成随机水情数据
 const generateRandomData = () => {
   return provinces.map((name) => ({
     name: name,
-    value: Math.floor(Math.random() * 101) // 生成 0-100 的随机整数
+    value: Math.floor(Math.random() * 101)
   }));
 };
 
 const chartData = ref({});
 const opts = ref({
-  title: {
-    text: '全国水情模拟图',
-    offsetCenter: [0, '45%'] // 调整标题位置避免遮挡南海诸岛
-  },
-  color: [
-    '#1890FF',
-    '#91CB74',
-    '#FAC858',
-    '#EE6666',
-    '#73C0DE',
-    '#3CA272',
-    '#FC8452',
-    '#9A60B4',
-    '#ea7ccc'
-  ],
   padding: [0, 0, 0, 0],
-  dataLabel: true, // 显示数据标签（省份名称）
-  enableScroll: false, // 禁止滚动
+  dataLabel: true,
+  enableScroll: false,
+  fontSize: 8,
+  fontColor: '#fff',
   extra: {
     map: {
-      border: true, // 显示边界线
+      border: true,
+      mercator: true,
       borderWidth: 1,
-      borderColor: '#666666',
-      fillOpacity: 0.8, // 地图区域透明度
-      activeBorderColor: '#f04864', // 选中区域边界颜色
-      activeFillColor: '#facc14', // 选中区域填充颜色
-      activeFillOpacity: 1, // 选中区域透明度
-      mercator: true // 使用墨卡托投影，可能需要额外配置或地图数据支持
-    }
-  },
-  legend: {
-    show: false // 通常地图不需要图例，依赖 visualMap
-  },
-  visualMap: {
-    // 视觉映射组件
-    show: true,
-    min: 0,
-    max: 100,
-    left: '10', // 调整位置到左侧
-    bottom: '10', // 调整位置到底部
-    text: ['高（涝）', '低（旱）'], // 两端文本
-    calculable: true, // 是否显示拖拽用的手柄
-    inRange: {
-      color: ['#ffeda0', '#feb24c', '#f03b20'] // 从黄到红的颜色过渡，可自定义
-      // 或者使用 ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'] 等更丰富的色阶
-    },
-    orient: 'vertical', // 垂直显示
-    itemWidth: 20,
-    itemHeight: 140,
-    align: 'bottom',
-    textStyle: {
-      color: '#333'
+      borderColor: '#41D7FF',
+      fillOpacity: 0.6,
+      activeBorderColor: '#00BCFB',
+      activeFillColor: '#00BCFB',
+      activeFillOpacity: 1
     }
   }
 });
 
-onMounted(() => {
-  // 模拟异步获取数据
-  setTimeout(() => {
-    const seriesData = generateRandomData();
-    chartData.value = {
-      series: [
-        {
-          data: seriesData
-        }
-      ]
+function getChartData() {
+  const mockData = generateRandomData();
+  return chinaGeo.features.map((province) => {
+    for (let i = 0; i < mockData.length; i++) {
+      if (province.properties.name === mockData[i].name) {
+        return {
+          ...province,
+          ...mockData[i],
+          color: '#0D9FD8'
+        };
+      }
+    }
+    return {
+      ...province,
+      value: 0,
+      color: '#ccc'
     };
-    console.log('Chart Data:', JSON.stringify(chartData.value));
-  }, 500);
+  });
+}
+
+onMounted(() => {
+  chartData.value = {
+    series: getChartData()
+  };
 });
 </script>
 
@@ -140,12 +114,12 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100vh; /* 使容器占满整个视口高度 */
+  height: 100vh;
   background-color: #fff;
 }
 
 .charts {
   width: 100%;
-  height: 90vh; /* 让图表占据大部分高度 */
+  height: 90vh;
 }
 </style>

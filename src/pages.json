@@ -19,7 +19,7 @@
 			}
 		},
 		{
-			"path": "pages/water-situation/water-situation",
+			"path": "pages/water/water",
 			"style": {
 				"navigationBarTitleText": "全国水情图"
 			}

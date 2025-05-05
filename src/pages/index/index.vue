@@ -4,7 +4,7 @@
     <view class="header">
       <view class="tab-active">设备管理</view>
       <view class="tab" @click="navigateToMap">分布图</view>
-      <view class="tab" @click="navigateToWater"></view>
+      <view class="tab" @click="navigateToWater">水情图</view>
     </view>
 
     <!-- 操作按钮区 -->
@@ -36,7 +36,7 @@
       <!-- 表头 -->
       <view class="table-header">
         <view class="th check-column">
-          <checkbox :checked="allChecked" value="all" @="toggleAllChecked" />
+          <checkbox :checked="allChecked" value="all" />
         </view>
         <view class="th">设备ID</view>
         <view class="th">设备别名</view>
@@ -51,7 +51,7 @@
       <scroll-view scroll-y scroll-x class="table-body">
         <view class="tr" v-for="(item, index) in deviceList" :key="index">
           <view class="td check-column">
-            <checkbox :checked="item.checked" @change="toggleChecked(index)" />
+            <checkbox :checked="item.checked" />
           </view>
           <view class="td">{{ item.deviceId }}</view>
           <view class="td">{{ item.deviceName }}</view>
