@@ -9,13 +9,19 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "swc"
+				"navigationBarTitleText": "设备列表"
 			}
 		},
 		{
 			"path": "pages/map/map",
 			"style": {
-				"navigationBarTitleText": "分布图"
+				"navigationBarTitleText": "设备分布图"
+			}
+		},
+		{
+			"path": "pages/water-situation/water-situation",
+			"style": {
+				"navigationBarTitleText": "全国水情图"
 			}
 		}
 	],

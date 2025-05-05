@@ -4,6 +4,7 @@
     <view class="header">
       <view class="tab-active">设备管理</view>
       <view class="tab" @click="navigateToMap">分布图</view>
+      <view class="tab" @click="navigateToWater"></view>
     </view>
 
     <!-- 操作按钮区 -->
@@ -87,6 +88,18 @@ const navigateToMap = () => {
     },
     fail: function (err) {
       console.error('导航到地图页面失败:', err);
+      uni.showToast({
+        title: '页面跳转失败',
+        icon: 'none'
+      });
+    }
+  });
+};
+const navigateToWater = () => {
+  uni.navigateTo({
+    url: '/pages/water/water',
+    fail: function (err) {
+      console.error('导航到水资源页面失败:', err);
       uni.showToast({
         title: '页面跳转失败',
         icon: 'none'
