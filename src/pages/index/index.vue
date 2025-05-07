@@ -36,7 +36,8 @@
       <!-- 表头 -->
       <view class="table-header">
         <view class="th check-column">
-          <checkbox :checked="allChecked" value="all" />
+          <view class="custom-checkbox" :class="{ checked: allChecked }" @click="toggleAllChecked">
+          </view>
         </view>
         <view class="th">设备ID</view>
         <view class="th">设备别名</view>
@@ -51,7 +52,10 @@
       <scroll-view scroll-y scroll-x class="table-body">
         <view class="tr" v-for="(item, index) in deviceList" :key="index">
           <view class="td check-column">
-            <checkbox :checked="item.checked" />
+            <view
+              class="custom-checkbox"
+              :class="{ checked: item.checked }"
+              @click="toggleChecked(index)"></view>
           </view>
           <view class="td">{{ item.deviceId }}</view>
           <view class="td">{{ item.deviceName }}</view>
@@ -259,11 +263,42 @@ onLoad(() => {
   text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 180rpx;
+  /* 添加垂直居中 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .check-column {
   flex: 0.3;
   min-width: 60rpx;
+}
+
+.custom-checkbox {
+  width: 36rpx;
+  height: 36rpx;
+  border: 2rpx solid #dcdfe6;
+  border-radius: 4rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box; /* 确保边框和内边距包含在宽高内 */
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.custom-checkbox.checked {
+  background-color: #007aff;
+  border-color: #007aff;
+}
+
+.custom-checkbox.checked::after {
+  content: '';
+  display: block;
+  width: 10rpx;
+  height: 20rpx;
+  border: solid white;
+  border-width: 0 4rpx 4rpx 0;
+  transform: rotate(45deg) translate(-2rpx, -2rpx); /* 微调对勾位置 */
 }
 
 /* 确保滚动效果正常 */

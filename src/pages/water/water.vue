@@ -90,7 +90,7 @@ const opts = ref({
 const mockData = generateRandomData();
 function getChartData() {
   const dataMap = new Map(mockData.map((item) => [item.name, item.value]));
-  return chinaGeo.features.map((province, idx) => {
+  return chinaGeo.features.map((province) => {
     const value = dataMap.get(province.properties.name);
     if (value !== undefined) {
       return {
