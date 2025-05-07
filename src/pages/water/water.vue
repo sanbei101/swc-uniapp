@@ -61,42 +61,48 @@ const generateRandomData = () => {
 
 const chartData = ref({});
 const opts = ref({
+  color: [
+    '#1890FF',
+    '#91CB74',
+    '#FAC858',
+    '#EE6666',
+    '#73C0DE',
+    '#3CA272',
+    '#FC8452',
+    '#9A60B4',
+    '#ea7ccc'
+  ],
   padding: [0, 0, 0, 0],
   dataLabel: true,
   enableScroll: false,
-  fontSize: 8,
-  fontColor: '#fff',
   extra: {
     map: {
       border: true,
-      mercator: true,
       borderWidth: 1,
-      borderColor: '#41D7FF',
+      borderColor: '#666666',
       fillOpacity: 0.6,
-      activeBorderColor: '#00BCFB',
-      activeFillColor: '#00BCFB',
+      activeBorderColor: '#F04864',
+      activeFillColor: '#FACC14',
       activeFillOpacity: 1
     }
   }
 });
-
+const mockData = generateRandomData();
 function getChartData() {
-  const mockData = generateRandomData();
-  return chinaGeo.features.map((province) => {
-    for (let i = 0; i < mockData.length; i++) {
-      if (province.properties.name === mockData[i].name) {
-        return {
-          ...province,
-          ...mockData[i],
-          color: '#0D9FD8'
-        };
-      }
+  const dataMap = new Map(mockData.map((item) => [item.name, item.value]));
+  return chinaGeo.features.map((province, idx) => {
+    const value = dataMap.get(province.properties.name);
+    if (value !== undefined) {
+      return {
+        ...province,
+        value
+      };
+    } else {
+      return {
+        ...province,
+        value: 0
+      };
     }
-    return {
-      ...province,
-      value: 0,
-      color: '#ccc'
-    };
   });
 }
 
