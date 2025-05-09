@@ -1,6 +1,6 @@
 {
     "name" : "swc",
-    "appid" : "swc-app",
+    "appid" : "__UNI__35EC1C4",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -15,7 +15,8 @@
         },
         "modules" : {
             "Geolocation" : {},
-            "Maps" : {}
+            "Maps" : {},
+            "Fingerprint" : {}
         },
         "distribute" : {
             "android" : {
