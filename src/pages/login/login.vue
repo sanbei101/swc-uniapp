@@ -15,6 +15,7 @@
           placeholder-class="input-placeholder" />
         <button class="submit-button" form-type="submit">登录</button>
       </form>
+      <button class="fingerprint-button" @click="handleFingerprintLogin">指纹登录</button>
     </view>
   </view>
 </template>
@@ -96,6 +97,84 @@ const handleLogin = () => {
   //   }
   // });
 };
+
+const handleFingerprintLogin = () => {
+  uni.checkIsSupportSoterAuthentication({
+    success: (res) => {
+      console.log('支持的认证方式:', res.supportMode);
+      if (res.supportMode.includes('fingerPrint')) {
+        checkFingerprintEnrolled();
+      } else {
+        uni.showToast({
+          title: '设备不支持指纹认证',
+          icon: 'none'
+        });
+      }
+    },
+    fail: (err) => {
+      console.error('检查支持的认证方式失败:', err);
+      uni.showToast({
+        title: '检查认证支持情况失败',
+        icon: 'none'
+      });
+    }
+  });
+};
+
+const checkFingerprintEnrolled = () => {
+  uni.checkIsSoterEnrolledInDevice({
+    checkAuthMode: 'fingerPrint',
+    success: (res) => {
+      console.log('指纹录入情况:', res);
+      if (res.isEnrolled) {
+        startFingerprintAuthentication();
+      } else {
+        uni.showToast({
+          title: '未录入指纹',
+          icon: 'none'
+        });
+      }
+    },
+    fail: (err) => {
+      console.error('检查指纹录入情况失败:', err);
+      uni.showToast({
+        title: '检查指纹录入情况失败',
+        icon: 'none'
+      });
+    }
+  });
+};
+
+const startFingerprintAuthentication = () => {
+  uni.startSoterAuthentication({
+    requestAuthModes: ['fingerPrint'],
+    challenge: '123456', // 挑战因子，随便填写即可
+    authContent: '请验证指纹以登录',
+    success: (res) => {
+      console.log('指纹认证成功:', res);
+      if (res.errCode === 0) {
+        // 认证成功，模拟登录
+        uni.showToast({
+          title: '指纹登录成功',
+          icon: 'success'
+        });
+        uni.navigateTo({ url: '/pages/index/index' });
+      } else {
+        uni.showToast({
+          title: `指纹认证失败: ${res.errMsg}`,
+          icon: 'none'
+        });
+      }
+    },
+    fail: (err) => {
+      console.error('指纹认证失败:', err);
+      uni.showToast({
+        title: '指纹认证失败',
+        icon: 'none'
+      });
+    }
+  });
+};
 </script>
 
 <style scoped>
@@ -155,5 +234,21 @@ const handleLogin = () => {
 
 .submit-button:active {
   background-color: #0056b3; /* 点击时颜色变深 */
+}
+
+.fingerprint-button {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  background-color: #28a745; /* 绿色背景，与登录按钮区分 */
+  color: #ffffff;
+  border: none;
+  border-radius: 8rpx;
+  font-size: 32rpx;
+  margin-top: 20rpx; /* 与上方按钮的间距 */
+}
+
+.fingerprint-button:active {
+  background-color: #1e7e34; /* 点击时颜色变深 */
 }
 </style>
