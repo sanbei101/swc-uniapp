@@ -5,6 +5,7 @@
       <view class="tab-active">设备管理</view>
       <view class="tab" @click="navigateToMap">分布图</view>
       <view class="tab" @click="navigateToWater">水情图</view>
+      <view class="tab" @click="navigateToMotitor">设备监测</view>
     </view>
 
     <!-- 操作按钮区 -->
@@ -104,6 +105,18 @@ const navigateToWater = () => {
     url: '/pages/water/water',
     fail: function (err) {
       console.error('导航到水资源页面失败:', err);
+      uni.showToast({
+        title: '页面跳转失败',
+        icon: 'none'
+      });
+    }
+  });
+};
+const navigateToMotitor = () => {
+  uni.navigateTo({
+    url: '/pages/monitor/monitor',
+    fail: function (err) {
+      console.error('导航到设备监测页面失败:', err);
       uni.showToast({
         title: '页面跳转失败',
         icon: 'none'
@@ -263,7 +276,6 @@ onLoad(() => {
   text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 180rpx;
-  /* 添加垂直居中 */
   display: flex;
   align-items: center;
   justify-content: center;
