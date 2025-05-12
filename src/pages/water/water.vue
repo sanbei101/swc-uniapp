@@ -101,9 +101,11 @@ function getChartData() {
 }
 
 onMounted(() => {
-  chartData.value = {
-    series: getChartData()
-  };
+  setTimeout(() => {
+    chartData.value = {
+      series: getChartData()
+    };
+  }, 500);
 });
 </script>
 
