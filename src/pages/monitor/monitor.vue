@@ -155,7 +155,7 @@ const chartOptions = ref({
 const generateMockData = (): MonitorDatum[] => {
   const mocks: MonitorDatum[] = [];
   const baseTime = new Date(searchParams.StartDate || Date.now()).getTime();
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 5; i++) {
     mocks.push({
       ID: i + 1,
       DeviceID: searchParams.DeviceID ? searchParams.DeviceID[0] : `DEV${1000 + i}`,
@@ -172,7 +172,7 @@ const generateMockData = (): MonitorDatum[] => {
       SWCSUM: Math.floor(Math.random() * 10),
       DataATM: Math.floor(1000 + Math.random() * 10),
       DataATS: Number((20 + Math.random() * 5).toFixed(2)),
-      AirHumidity: Math.floor(50 + Math.random() * 20), // Mock Air Humidity
+      AirHumidity: Math.floor(50 + Math.random() * 20),
       DataAT: 0,
       DataEC: [],
       DataSWC: [],
@@ -235,7 +235,7 @@ const handleExportCsv = () => {
 };
 
 onMounted(() => {
-  handleQueryData();
+  setTimeout(() => handleQueryData(), 500);
 });
 </script>
 
