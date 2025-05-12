@@ -6,12 +6,12 @@
 		}
 	},
 	"pages": [
-		{
-			"path": "pages/login/login",
-			"style": {
-				"navigationBarTitleText": "登录"
-			}
-		},
+		// {
+		// 	"path": "pages/login/login",
+		// 	"style": {
+		// 		"navigationBarTitleText": "登录"
+		// 	}
+		// },
 		{
 			"path": "pages/index/index",
 			"style": {
@@ -28,6 +28,12 @@
 			"path": "pages/water/water",
 			"style": {
 				"navigationBarTitleText": "全国水情图"
+			}
+		},
+		{
+			"path": "pages/monitor/monitor",
+			"style": {
+				"navigationBarTitleText": "数据检测图"
 			}
 		}
 	],

@@ -1,12 +1,6 @@
 <template>
   <view class="container">
-    <qiun-data-charts
-      type="map"
-      :opts="opts"
-      :chartData="chartData"
-      canvasId="WaterSituationMap"
-      id="WaterSituationMap"
-      class="charts" />
+    <qiun-data-charts type="map" :opts="opts" :chartData="chartData" class="charts" />
   </view>
 </template>
 
