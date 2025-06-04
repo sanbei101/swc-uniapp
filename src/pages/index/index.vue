@@ -125,22 +125,96 @@ const navigateToMotitor = () => {
   });
 };
 const mockList = () => {
-  const baseDeviceId = 862635065082100;
-  const baseCcid = 898608411924401707000;
-  for (let i = 1; i <= 50; i++) {
-    const newDeviceId = (baseDeviceId + i).toString();
-    const newCcid = (baseCcid + i).toString();
-    deviceList.push({
+  const devices = [
+    {
+      deviceId: '862635065082109',
+      deviceName: '农大-862635065082109',
       productType: 'CS1H-50BE',
-      valid: '1',
-      checked: false,
-      deviceId: newDeviceId,
-      deviceName: `农大-${newDeviceId}`,
-      ccid: newCcid,
-      latitude: (40.005683 + (Math.random() - 0.5) * 0.01).toFixed(6),
-      longitude: (116.35175 + (Math.random() - 0.5) * 0.01).toFixed(6)
+      ccid: '89860841192440170710',
+      latitude: '40.005683',
+      longitude: '116.35175',
+      valid: '0'
+    },
+    {
+      deviceId: '862635065093353',
+      deviceName: '农大-862635065093353',
+      productType: 'CS1H-50BE',
+      ccid: '89860841192440170692',
+      latitude: '40.005391',
+      longitude: '116.35009',
+      valid: '0'
+    },
+    {
+      deviceId: '862635065106254',
+      deviceName: '农大-862635065106254',
+      productType: 'CS1H-50BE',
+      ccid: '89860841192440170693',
+      latitude: '40.004662',
+      longitude: '116.34987',
+      valid: '0'
+    },
+    {
+      deviceId: '862635065115099',
+      deviceName: '农大-862635065115099',
+      productType: 'CS1H-50BE',
+      ccid: '89860841192440170709',
+      latitude: '40.005177',
+      longitude: '116.35009',
+      valid: '0'
+    },
+    {
+      deviceId: '862635065126468',
+      deviceName: '农大-862635065126468',
+      productType: 'CS1H-50BE',
+      ccid: '89860841192440170694',
+      latitude: '40.005251',
+      longitude: '116.3497',
+      valid: '0'
+    },
+    {
+      deviceId: '862635065140147',
+      deviceName: '农大-862635065140147',
+      productType: 'CS1H-50BE',
+      ccid: '89860841192440170691',
+      latitude: '40.005307',
+      longitude: '116.35003',
+      valid: '0'
+    },
+    {
+      deviceId: '862635065146318',
+      deviceName: '农大-862635065146318',
+      productType: 'CS1H-50BE',
+      ccid: '89860841192440170708',
+      latitude: '40.005292',
+      longitude: '116.34974',
+      valid: '0'
+    },
+    {
+      deviceId: '862635065146367',
+      deviceName: '农大-862635065146367',
+      productType: 'CS1H-50BE',
+      ccid: '89860841192440170695',
+      latitude: '40.005316',
+      longitude: '116.35013',
+      valid: '0'
+    },
+    {
+      deviceId: '862635065168502',
+      deviceName: '农大-862635065168502',
+      productType: 'CS1H-50BE',
+      ccid: '89860841192440170706',
+      latitude: '40.005133',
+      longitude: '116.34982',
+      valid: '0'
+    }
+  ];
+
+  devices.forEach((device) => {
+    deviceList.push({
+      ...device,
+      checked: false
     });
-  }
+  });
 };
 onLoad(() => mockList());
 const deviceList = reactive<Device[]>([]);
